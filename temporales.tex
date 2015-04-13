@@ -26,7 +26,7 @@
 
 	\item	Existen 3 tipos: \pause
 		\begin{itemize}
-		\item Histórica: mantiene el tiempo validez \pause
+		\item Histórica: mantiene el tiempo de validez \pause
 		\item Rollback: mantiene el tiempo de transacción \pause
 		\item Bitemporales: mantiene ambos \pause
 		\end{itemize}
@@ -53,7 +53,7 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Tiempo de transacción y tiempo vaĺido}
+\frametitle{Tiempo de transacción y tiempo de validez}
 	\begin{itemize}
 	\item	Los tiempos de validez y de transacción están en dos escalas
 		completamente distintas. \pause
@@ -132,4 +132,91 @@
 	\ncline{<-}{2}{4}
 	\ncline{<-}{3}{4}
 	\end{figure}
+\end{frame}
+
+\begin{frame}
+\frametitle{Lenguaje temporales}
+	\begin{itemize}
+	\item	En 1994 se publicó la especificación de TSQL2 como candidato
+		para ser el estándar de bases de datos temporales. \pause
+
+	\item	Sin embargo, tuvo críticas por no ser estrictamente relacional
+		(\small{\url{http://www.dcs.warwick.ac.uk/~hugh/TTM/OnTSQL2.pdf}}).
+		\pause
+
+	\item	El lenguaje SQL-2011 incorpora primitivas para manejar datos temporales.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011}
+	\begin{itemize}
+	\item	No introduce un nuevo tipo para los períodos de tiempo, dado que
+		cada usuario del DMBS tendría que adaptarse a los nuevos tipos.
+		Esto puede llevar mucho tiempo y hacer que la adoptación del lenguaje
+		se atrase. \pause
+
+	\item	Las tablas se crean indicando que ``temporalidad'' queremos. Para el
+		tiempo de transacción esto se maneja automáticamente.
+		\pause
+
+	\item	No está soportado en MySQL.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011 - Creación de tabla histórica}
+\begin{center}
+\small
+	\begin{itemize}
+
+	\item	\texttt{CREATE TABLE Emp(ENo INTEGER, EStart DATE, EEnd DATE,
+		EDept INTEGER, PERIOD FOR EPeriod (EStart, EEnd))} \\
+	\pause
+
+	\item	\texttt{INSERT INTO Emp VALUES (22217, DATE ‘2010-01-01’,
+		DATE '2011-11-12', 3)} \\
+
+	\pause
+
+	\item \begin{tabular}{|c|c|c|c|}
+	\hline
+	Eno	& EStart	& EEnd		& EDept	\\ \hline
+	22217	& 2010-01-01	& 2011-11-12	& 3	\\ \hline
+	\end{tabular}
+
+	\pause
+
+	\item	(Nada nuevo hasta ahora)
+	\end{itemize}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011 - Consultas sobre tabla histórica}
+\begin{center}
+\small
+	\begin{itemize}
+
+	\item	\texttt{UPDATE Emp FOR PORTION OF EPeriod FROM DATE '2011-02-03'
+		TO DATE '2011-09-10' SET EDept = 4 WHERE ENo = 22217}
+	\pause
+
+	\item Pasamos de: \hfill \begin{tabular}{|c|c|c|c|}
+	\hline
+	Eno	& EStart	& EEnd		& EDept	\\ \hline
+	22217	& 2010-01-01	& 2011-11-12	& 3	\\ \hline
+	\end{tabular}
+	\pause
+
+	\item A: \hfill \begin{tabular}{|c|c|c|c|}
+	\hline
+	Eno	& EStart	& EEnd		& EDept	\\ \hline
+	22217	& 2010-01-01	& 2011-02-03	& 3	\\ \hline
+	22217	& 2011-02-03	& 2011-09-10	& 4	\\ \hline
+	22217	& 2011-09-10	& 2011-11-12	& 3	\\ \hline
+	\end{tabular}
+
+	\end{itemize}
+\end{center}
 \end{frame}
