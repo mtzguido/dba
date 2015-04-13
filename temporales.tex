@@ -160,7 +160,7 @@
 		tiempo de transacción esto se maneja automáticamente.
 		\pause
 
-	\item	No está soportado en MySQL.
+	\item	Al día de la fecha, no está soportado en MySQL.
 	\end{itemize}
 \end{frame}
 
@@ -219,4 +219,134 @@
 
 	\end{itemize}
 \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011 - Consultas sobre tabla histórica}
+\begin{center}
+\small
+	\begin{itemize}
+
+	\item	\texttt{DELETE Emp FOR PORTION OF EPeriod FROM DATE '2011-02-03'
+		TO DATE '2011-09-10' WHERE ENo = 22217}
+
+	\item Pasamos de: \hfill \begin{tabular}{|c|c|c|c|}
+	\hline
+	Eno	& EStart	& EEnd		& EDept	\\ \hline
+	22217	& 2010-01-01	& 2011-11-12	& 3	\\ \hline
+	\end{tabular}
+
+	\item A: \hfill \begin{tabular}{|c|c|c|c|}
+	\hline
+	Eno	& EStart	& EEnd		& EDept	\\ \hline
+	22217	& 2010-01-01	& 2011-02-03	& 3	\\ \hline
+	22217	& 2011-09-10	& 2011-11-12	& 3	\\ \hline
+	\end{tabular}
+
+	\end{itemize}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011 - Clave primaria}
+	\begin{itemize}
+	\item	En el ejemplo anterior, la clave no puede ser simplemente
+		{\it Eno}. \pause
+
+	\item	Agregar los campos del período a la clave tampoco soluciona
+		el problema. \pause
+
+		\hfill \begin{tabular}{|c|c|c|c|}
+		\hline
+		Eno	& EStart	& EEnd		& EDept	\\ \hline
+		22217	& 2010-01-01	& 2011-09-10	& 3	\\ \hline
+		22217	& 2011-02-03	& 2011-11-12	& 4	\\ \hline
+		\end{tabular}
+		\pause
+
+	\item	El DBMS nos da soporte interno.
+	\pause
+
+	\item	\texttt{ALTER TABLE Emp ADD PRIMARY KEY (ENo, EPeriod WITHOUT OVERLAPS)}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011 - Claves foráneas}
+	\begin{itemize}
+	\item	Se pueden especificar claves foráneas temporales.
+		\pause
+
+	\item	El problema:
+		\hfill \begin{tabular}{|c|c|c|c|}
+		\hline
+		Eno	& EStart	& EEnd		& EDept	\\ \hline
+		22218	& 2010-01-01	& 2011-02-03	& 3	\\ \hline
+		22218	& 2011-02-03	& 2011-11-12	& 4	\\ \hline
+		\end{tabular}
+
+		\hfill \begin{tabular}{|c|c|c|c|}
+		\hline
+		Dno	& DStart	& DEnd		& DName	\\ \hline
+		3	& 2009-01-01	& 2011-12-31	& Test	\\ \hline
+		4	& 2011-06-01	& 2011-12-31	& QA	\\ \hline
+		\end{tabular}
+		\pause
+
+	\item	La solución: \texttt{ALTER TABLE Emp ADD FOREIGN KEY (Edept,
+			PERIOD EPeriod) REFERENCES Dept (DNo, PERIOD DPeriod)}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011 - Condiciones temporales}
+	\begin{itemize}
+	\item	Para consultar, se puede usar la forma tradicional:
+
+		\texttt{SELECT Name, Edept FROM Emp WHERE ENo = 22217
+		AND EStart <= DATE '2011-01-02' AND EEnd > DATE '2011-01-02'}
+	\pause
+
+	\item	Sin embargo, hay nuevos operadores que ayudan un poco:
+
+		\texttt{SELECT Ename, Edept FROM Emp WHERE ENo = 22217
+		AND EPeriod CONTAINS DATE '2011-01-02'}
+	\pause
+
+	\item	Hay mas, como: \texttt{OVERLAPS}, \texttt{EQUALS}, \texttt{PRECEDES},
+		\texttt{SUCCEEDS}, \texttt{IMMEDIATELY PRECEDES},
+		y \texttt{IMMEDIATELY SUCCEEDS}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011 - Tablas Rollback}
+	\begin{itemize}
+	\item	Se agregar un período para que el DMBS maneje automáticamente
+		con el tiempo de transacción.
+	\pause
+
+	\item	\texttt{CREATE TABLE Emp (ENo INTEGER, Sys\_start
+		TIMESTAMP(12) GENERATED ALWAYS AS ROW START,
+		Sys\_end TIMESTAMP(12) GENERATED ALWAYS AS ROW
+		END, EName VARCHAR(30), PERIOD FOR SYSTEM\_TIME
+		(Sys\_start, Sys\_end)) WITH SYSTEM VERSIONING}
+	\pause
+
+	\item	Al hacer un \texttt{INSERT}, los campos se populan automáticamente
+		(Sys\_end vale ∞).
+	\pause
+
+	\item	Al hacer \texttt{UPDATE} o \texttt{DELETE} los campos viejos
+		son completamente ignorados. Un usuario no puede nunca borrar
+		la historia.
+	\pause
+
+	\item	No hay implicaciones para claves foráneas.
+	\pause
+
+	\item	Se puede hacer un \texttt{SELECT} ``histórico'' con la directiva
+		\texttt{FOR SYSTEM\_TIME AS OF}.
+
+	\end{itemize}
 \end{frame}
