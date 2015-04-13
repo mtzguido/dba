@@ -6,8 +6,7 @@ docname=slides
 all: $(docname).pdf
 
 %.pdf: %.tex
-	pdflatex $<
-	pdflatex $<
+	xelatex $<
 
 clean:
 	rm -f $(docname).{log,aux,pdf,toc,out,snm,nav}
