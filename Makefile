@@ -5,7 +5,7 @@ docname=slides
 
 all: $(docname).pdf
 
-%.pdf: %.tex
+%.pdf: %.tex *.tex
 	xelatex $<
 
 clean:

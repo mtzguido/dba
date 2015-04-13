@@ -5,6 +5,9 @@
 	\begin{itemize}
 	\item	Muchas aplicaciones de las bases de datos deben tener
 		en cuenta la temporalidad de los datos. \pause
+		Aplicaciones financieras, compañías de seguro, reserva
+		de hoteles, registros de pacientes, sistemas de soporte
+		a la decisión. \pause
 
 	\item	Si bien se puede manejar desde un nivel mas alto, esto
 		complica las consultas SQL y se vuelve inmanejable rápidamente.
@@ -74,13 +77,55 @@
 \end{frame}
 
 \begin{frame}
+\begin{center}
+\frametitle{Ejemplo de bitemporalidad}
+	\tiny
+
+	``Desde el 1/6/1995 al 3/9/2000 John se mudó a Beachy, pero para no
+	pagar impuestos, nuncá lo reportó. Luego, durante una investigación
+	se descubre (en el 2/2/2001) que si se había mudado.''
+
+	\pause
+	\vspace{5mm}
+
+	Histórica: \hfill
+	\begin{tabular}{|c|c|c|c|}
+	\hline
+	Nombre   & Ciudad	& ValidFrom	& ValidTo	\\ \hline
+	John Doe & Smallville	& 3/4/1975	& 26/8/1994	\\ \hline
+	John Doe & Bigtown	& 26/8/1994	& 1/6/1995	\\ \hline
+	John Doe & Beachy	& 1/6/1995	& 3/9/2000	\\ \hline
+	John Doe & Bigtown	& 3/9/2000	& 1/4/2001	\\ \hline
+	\end{tabular}
+
+	\pause
+	\vspace{5mm}
+
+	\newcommand{\z}[0]{\alert<4>}
+
+	Bitemporal: \hfill
+	\begin{tabular}{|c|c|c|c|c|c|}
+	\hline
+	Nombre   & Ciudad	& ValidFrom	& ValidTo	& TransFrom	& TransTo	\\ \hline
+	John Doe & Smallville	& 3/4/1975	& ∞		& 4/4/1975	& 27/12/1994	\\ \hline
+	\z{John Doe} & \z{Smallville}	& \z{3/4/1975}	& \z{26/8/1994}	& \z{27/12/1994}	& \z{∞}	\\ \hline
+	John Doe & Bigtown	& 26/8/1994	& ∞		& 27/12/1994	& 2/2/2001	\\ \hline
+	\z{John Doe} & \z{Bigtown}	& \z{26/8/1994}	& \z{1/6/1995}	& \z{2/2/2001}	& \z{∞}	\\ \hline
+	\z{John Doe} & \z{Beachy}	& \z{1/6/1995}	& \z{3/9/2000}	& \z{2/2/2001}	& \z{∞}	\\ \hline
+	John Doe & Bigtown	& 3/9/2000	& ∞		& 2/2/2001	& 1/4/2001	\\ \hline
+	\z{John Doe} & \z{Bigtown}	& \z{3/9/2000}	& \z{1/4/2001}	& \z{1/4/2001}	& \z{∞}	\\ \hline
+	\end{tabular}
+\end{center}
+\end{frame}
+
+\begin{frame}
 \frametitle{Comparación de tipos de DB Temporal}
 	\begin{figure}
 
 	\psmatrix[mnode=r,colsep=1,rowsep=1]
 	& [name=1] Bitemporal & \\
 	[name=2] Histórica & & [name=3] Rollback \\
-	& [name=4] Tradicional &
+	& [name=4] Snapshot &
 	\endpsmatrix
 	\ncline{<-}{1}{2}
 	\ncline{<-}{1}{3}
