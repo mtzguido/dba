@@ -327,12 +327,20 @@
 		con el tiempo de transacción.
 	\pause
 
-	\item	\texttt{CREATE TABLE Emp (ENo INTEGER, Sys\_start
-		TIMESTAMP(12) GENERATED ALWAYS AS ROW START,
-		Sys\_end TIMESTAMP(12) GENERATED ALWAYS AS ROW
-		END, EName VARCHAR(30), PERIOD FOR SYSTEM\_TIME
-		(Sys\_start, Sys\_end)) WITH SYSTEM VERSIONING}
-	\pause
+	\texttt{\small{
+	\item	CREATE TABLE Emp (						\\
+		~~ENo INTEGER, EName VARCHAR(30),				\\
+		~~Sys\_start TIMESTAMP(12) GENERATED ALWAYS AS ROW START,	\\
+		~~Sys\_end TIMESTAMP(12) GENERATED ALWAYS AS ROW END,		\\
+		~~PERIOD FOR SYSTEM\_TIME (Sys\_start, Sys\_end)		\\
+		) WITH SYSTEM VERSIONING
+	}}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011 - Tablas Rollback}
+	\begin{itemize}
 
 	\item	Al hacer un \texttt{INSERT}, los campos se populan automáticamente
 		(Sys\_end vale ∞).
@@ -348,6 +356,42 @@
 
 	\item	Se puede hacer un \texttt{SELECT} ``histórico'' con la directiva
 		\texttt{FOR SYSTEM\_TIME AS OF}.
+
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011 - Tablas Bitemporales}
+	\begin{itemize}
+	\item	Simplemente se combinan ambas facilidades.
+	\pause
+
+	\texttt{\small{
+	\item	CREATE TABLE Emp(						\\
+		~~ENo INTEGER, EStart DATE, EEnd DATE, EDept INTEGER,		\\
+		~~PERIOD FOR EPeriod (EStart, EEnd),				\\
+		~~Sys\_start TIMESTAMP(12) GENERATED ALWAYS AS ROW START,	\\
+		~~Sys\_end TIMESTAMP(12) GENERATED ALWAYS AS ROW END,		\\
+		~~EName VARCHAR(30),						\\
+		~~PERIOD FOR SYSTEM\_TIME (Sys\_start, Sys\_end),		\\
+		~~PRIMARY KEY (ENo, EPeriod WITHOUT OVERLAPS),			\\
+		~~FOREIGN KEY (Edept, PERIOD EPeriod)				\\
+		~~REFERENCES Dept (DNo, PERIOD DPeriod)				\\
+		) WITH SYSTEM VERSIONING
+	}}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{SQL-2011 - Consultando el pasado}
+	\begin{itemize}
+
+	\item \texttt{\small{SELECT~ENo, EDept					\\
+		FROM~~~Emp FOR SYSTEM\_TIME AS OF				\\
+		~~~~~~~~~~~TIMESTAMP '2011-07-01 00:00:00'			\\
+		WHERE~~ENo = 22217						\\
+		~~AND~~EPeriod CONTAINS DATE '2010-12-01'
+	}}
 
 	\end{itemize}
 \end{frame}
