@@ -25,7 +25,7 @@
 \begin{frame}
 		\frametitle{Índices espaciales}
 		Los índices espaciales se utilizan en las bases de datos de este tipo para reducir los tiempos de búsqueda. \pause
-		Aunque existen varias implementaciones de índices espaciales, el método preferido se conoce como {\bf árbol-R}, una estructura de datos en forma de árbol de búsqueda balanceado, en donde los objetos cercanos se agrupan en su rectángulo delimitador mínimo (minimum bounding rectangle), ubicado un nivel más alto que ellos (la "R" en el nombre del índice es por "rectángulo"). \pause
+		Aunque existen varias implementaciones de índices espaciales, el método preferido se conoce como {\bf árbol-R}, una estructura de datos en forma de árbol de búsqueda balanceado, en donde los objetos cercanos se agrupan en su rectángulo delimitador mínimo (minimum bounding rectangle), ubicado un nivel más alto que ellos (la ``R'' en el nombre del índice es por ``rectángulo''). \pause
 		En las hojas se encuentran los objetos de nuestra base de datos. \pause
 		Este índice hace muy efectiva la búsqueda de los k vecinos más próximos a través de un join espacial.
 \end{frame}
@@ -37,7 +37,7 @@
 		Asociada a cada clase existe un conjunto de operaciones que actúan sobre instancias de ellas, las cuales pueden dividirse en tres grandes grupos: \\ \pause
 		\begin{itemize}
 			\item Funciones básicas: aplicables a cualquier instancia de \texttt{Geometry}. Por ejemplo, la función para obtener el sistema de coordenadas subyacente (\texttt{SpatialReference()}).
-			\item Operaciones que predican sobre relaciones entre objetos espaciales. Por ejemplo, \texttt{interesect} comprueba si el interior de dos objetos no tienen una intersección nula.
+			\item Operaciones que predican sobre relaciones entre objetos espaciales. Por ejemplo, \texttt{intersect} comprueba si el interior de dos objetos no tienen una intersección nula.
 			\item Operaciones generales para el análisis espacial. Por ejemplo, \texttt{distance} retorna la distancia más corta entre dos objetos espaciales.
 		\end{itemize}
 \end{frame}
