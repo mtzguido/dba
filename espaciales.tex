@@ -61,18 +61,31 @@
 				GDP Number, \\
 				Shape Polygon);
 		}
-
+		\texttt{
 				TABLE City( \\
 				Name varchar(30), \\
 				Country varchar(30), \\
 				Pop Integer, \\
 				Shape Point); \\
-
+		}
+		\texttt{
 				TABLE River( \\
 				Name varchar(30), \\
 				Origin varchar(30), \\
 				Length Number, \\
 				Shape LineString);
-
+		}
 
 \end{frame}
+
+\begin{frame}
+		\frametitle{Ejemplos de consultas espaciales: número 1}
+		Para obtener los nombres de los países limítrofes con Argentina, realizamos la siguiente consulta: \\
+		\texttt{
+				SELECT C1.Name AS "Países limítrofes de Argentina" \\
+				FROM Country C1, Country C2 \\
+				WHERE Touch(C1.Shape, C2.Shape) = 1 AND C2.Name = 'Argentina'
+		} \\
+		El predicado \texttt{Touch} permite conocer si dos objetos geométricos son adyacentes sin solaparse.
+\end{frame}
+
