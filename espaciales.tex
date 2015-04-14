@@ -160,3 +160,24 @@
 	El predicado \texttt{Touches} permite conocer si dos objetos geométricos
 	son adyacentes sin solaparse.
 \end{frame}
+
+\begin{frame}
+\frametitle{Ejemplos de consultas espaciales: número 2}
+	Si lo que buscamos es conocer las longitudes que cubren los ríos en cada país que atraviesan,
+	ejecutamos la siguiente consulta:
+	\medskip
+	\pause
+
+	\texttt{SELECT R.Name, C.Name, Length(Intersection(R.Shape, C.Shape)) AS "Length" \\
+			FROM River R, Country C \\
+			WHERE Cross(R.Shape, C.Shape) = 1
+	}
+
+	\medskip
+	\pause
+
+	La función \texttt{Intersection} retorna un tipo geométrico (en este caso,
+	un \texttt{LineString}). Su longitud será la del río en el interior de determinado país. \\
+	El predicado \texttt{Cross} indica si el interior de una superficie se intersecta
+	con una curva.
+\end{frame}
