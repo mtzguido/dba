@@ -1,0 +1,31 @@
+
+\subsection{Motivación}
+
+\begin{frame}
+		\frametitle{Motivación}
+		Es usual encontrar contextos de aplicación en los cuales la ubicación geográfica de los datos a representar adquiere una importancia fundamental a la hora de recuperarlos. \pause \\
+		Tan es asi que se han desarrollado sistemas de administradores de bases de datos específicamente orientados a manejar eficientemente estos datos. \pause \\
+		Algunos ejemplos tangibles de tales sistemas son:
+		\begin{itemize}
+				\item	Servicios web (encontrar el servidor más cercano al cliente) \pause
+				\item	Astronomía (encontrar todas las estrellas cercanas a un punto) \pause
+				\item	Compañía de seguros (qué casas están más expuestas a desastres naturales?) \pause
+				\item	Comandante de ejército (dónde se ubica el enemigo?)
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+		\frametitle{Definición de DB espacial}
+		Una base de datos espacial es una DB que provee soporte interno para manejar eficientemente datos espaciales. \pause
+		La mayoría permite representar objetos geométricos como puntos, lineas y polígonos; pero algunas además se extienden a estructuras más complejas como objetos tridimensionales. \pause
+		Implementan un indexado espacial, más eficiente que el indexado tradicional para estos dominios de aplicación; algoritmos optimizados para procesar operaciones espaciales, y reglas para agilizar las consultas. \pause
+		Además, soportan tipos de datos abstractos espaciales y un lenguaje de consultas desde las cuales pueden ser manipulados.
+\end{frame}
+
+\begin{frame}
+		\frametitle{Índices espaciales}
+		Los índices espaciales se utilizan en las bases de datos de este tipo para reducir los tiempos de búsqueda. \pause
+		Aunque existen varias implementaciones de índices espaciales, el método preferido se conoce como {\bf árbol-R}, una estructura de datos en forma de árbol de búsqueda balanceado, en donde los objetos cercanos se agrupan en su rectángulo delimitador mínimo (minimum bounding rectangle), ubicado un nivel más alto que ellos (la "R" en el nombre del índice es por "rectángulo"). \pause
+		En las hojas se encuentran los objetos de nuestra base de datos. \pause
+		Este índice hace muy efectiva la búsqueda de los k vecinos más próximos a través de un join espacial.
+\end{frame}

@@ -9,6 +9,6 @@ all: $(docname).pdf
 	xelatex $<
 
 clean:
-	rm -f $(docname).{log,aux,pdf,toc,out,snm,nav}
+	rm -f *.{log,aux,pdf,toc,out,snm,nav}
 
 re: clean all
