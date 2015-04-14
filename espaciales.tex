@@ -10,7 +10,7 @@
 				\item	Servicios web (encontrar el servidor más cercano al cliente) \pause
 				\item	Astronomía (encontrar todas las estrellas cercanas a un punto) \pause
 				\item	Compañía de seguros (qué casas están más expuestas a desastres naturales?) \pause
-				\item	Comandante de ejército (dónde se ubica el enemigo?)
+				\item	Control de aerolínas (dónde está cada avión?)
 		\end{itemize}
 \end{frame}
 
@@ -28,4 +28,28 @@
 		Aunque existen varias implementaciones de índices espaciales, el método preferido se conoce como {\bf árbol-R}, una estructura de datos en forma de árbol de búsqueda balanceado, en donde los objetos cercanos se agrupan en su rectángulo delimitador mínimo (minimum bounding rectangle), ubicado un nivel más alto que ellos (la "R" en el nombre del índice es por "rectángulo"). \pause
 		En las hojas se encuentran los objetos de nuestra base de datos. \pause
 		Este índice hace muy efectiva la búsqueda de los k vecinos más próximos a través de un join espacial.
+\end{frame}
+
+\begin{frame}
+		\frametitle{Lenguaje de consultas espaciales}
+		El comité OGC (Open Geospatial Consortium, alguna vez llamado OGIS), conformado por miembros de las mayores compañías de software, formuló un estándar sobre la interoperabilidad de intercambio de geodatos. En particular, nos interesa la extensión de SQL que se desarrolló al respecto. \pause
+		La misma se basa en un modelo de datos geométricos, en donde se define una clase base no instanciable \texttt{Geometry} y 4 subclases principales derivadas de ella, \texttt{Point}, \texttt{Curve}, \texttt{Surface} y \texttt{GeometryCollection}.
+		Asociada a cada clase existe un conjunto de operaciones que actúan sobre instancias de ellas, las cuales pueden dividirse en tres grandes grupos: \\ \pause
+		\begin{itemize}
+			\item Funciones básicas: aplicables a cualquier instancia de \texttt{Geometry}. Por ejemplo, la función para obtener el sistema de coordenadas subyacente (\texttt{SpatialReference()}).
+			\item Operaciones que predican sobre relaciones entre objetos espaciales. Por ejemplo, \texttt{interesect} comprueba si el interior de dos objetos no tienen una intersección nula.
+			\item Operaciones generales para el análisis espacial. Por ejemplo, \texttt{distance} retorna la distancia más corta entre dos objetos espaciales.
+		\end{itemize}
+\end{frame}
+
+\begin{frame}
+		\frametitle{Lenguaje de consultas espaciales}
+		La siguiente tabla muestra las operaciones más importantes definidas por el estándar OSGI para SQL, discriminadas por el criterio recién presentado: \\
+	\begin{center}
+	\includegraphics[height=5cm]{tablaOGIS.png}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+		\frametitle{Ejemplos de consultas espaciales}
 \end{frame}
