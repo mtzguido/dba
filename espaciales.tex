@@ -118,47 +118,85 @@
 \end{frame}
 
 \begin{frame}
+\begin{itemize}
 	\frametitle{Ejemplos de consultas espaciales}
 
-	Consultaremos una base de datos llamada \texttt{Mundo}, que almacena
-	las relaciones espaciales entre tres entidades: \texttt{País},
-	\texttt{Ciudad} y \texttt{Río}. Las tablas de los tres tipos básicos
-	son las siguientes: \pause
+	\item Consultaremos una base de datos llamada \texttt{Mundo},
+	que almacena las relaciones espaciales entre tres entidades:
+	\texttt{País}, \texttt{Ciudad} y \texttt{Río}. Las tablas de los tres
+	tipos básicos son las siguientes: \pause
 
-	\medskip
+	\texttt {
+	\item	TABLE Country(Name varchar(30), Cont varchar(30), \\
+		~~~~~~~~~~~~~~Pop Integer, GDP Number, \\
+		~~~~~~~~~~~~~~Shape Polygon);
+	}
 
-	\texttt{TABLE Country(Name varchar(30), Cont varchar(30), Pop Integer,
-		GDP Number, Shape Polygon);}
+	\texttt {
+	\item	TABLE City(Name varchar(30), Country varchar(30), \\
+		~~~~~~~~~~~Pop Integer, Shape Point);
+	}
 
-	\medskip
 
-	\texttt{TABLE City(Name varchar(30), Country varchar(30), Pop Integer,
-		Shape Point);}
-
-	\medskip
-
-	\texttt{TABLE River(Name varchar(30), Origin varchar(30), Length Number,
-		Shape LineString);}
+	\texttt{
+	\item	TABLE River(Name varchar(30), Origin varchar(30), \\
+		~~~~~~~~~~~~Length Number, Shape LineString);
+	}
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Ejemplos de consultas espaciales: número 1}
-	Para obtener los nombres de los países limítrofes con Argentina,
-	realizamos la siguiente consulta:
-
-	\medskip
+\begin{itemize}
+	\item	Para obtener los nombres de los países limítrofes con
+		Argentina, realizamos la siguiente consulta:
 	\pause
 
-	\texttt{SELECT C1.Name AS "Países limítrofes de Argentina" \\
-			FROM Country C1, Country C2 \\
-			WHERE Touches(C1.Shape, C2.Shape) = 1 AND C2.Name = 'Argentina'
+	\texttt{
+	\item	SELECT~C1.Name AS "Países limítrofes \ \\
+		~~~~~~~~~~~~~~~~~~~de Argentina" \\
+		FROM~~~Country C1, Country C2 \\
+		WHERE~~Touches(C1.Shape, C2.Shape) = 1 \\
+		~~~~~~~AND C2.Name = 'Argentina'
 	}
 
-	\medskip
 	\pause
 
-	El predicado \texttt{Touches} permite conocer si dos objetos geométricos
-	son adyacentes sin solaparse.
+	\item	El predicado \texttt{Touches} permite conocer si dos objetos
+		geométricos son adyacentes sin solaparse.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplos de consultas espaciales: número 2}
+\begin{itemize}
+	\item	Longitud de la sección de cada río, en cada país que el mismo
+		cruza.
+	\pause
+
+	\texttt{
+	\item	SELECT~~R.Name, C.Name, \\
+		~~~~~~~~Length(Intersection(R.Shape, C.Shape)) \\
+		FROM~~~~River R, City C \\
+		WHERE~~~Cross(R.Shape, C.Shape)
+	}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplos de consultas espaciales: número 3}
+\begin{itemize}
+	\item	Ordenar países por cantidad de vecinos.
+	\pause
+
+	\texttt{
+	\item	SELECT~~~C0.Name, Count(C1.Name),	\\
+		FROM~~~~~Country C0, Country C1		\\
+		WHERE~~~~Touch(C0.Shape, C1.Shape)	\\
+		GROUP~BY~C0.Name			\\
+		ORDER~BY~Count(C0.Name)
+	}
+\end{itemize}
 \end{frame}
 
 \begin{frame}
