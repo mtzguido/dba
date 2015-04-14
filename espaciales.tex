@@ -25,7 +25,7 @@
 \begin{frame}
 		\frametitle{Índices espaciales}
 		Los índices espaciales se utilizan en las bases de datos de este tipo para reducir los tiempos de búsqueda. \pause
-		Aunque existen varias implementaciones de índices espaciales, el método preferido se conoce como {\bf árbol-R}, una estructura de datos en forma de árbol de búsqueda balanceado, en donde los objetos cercanos se agrupan en su rectángulo delimitador mínimo (minimum bounding rectangle), ubicado un nivel más alto que ellos (la "R" en el nombre del índice es por "rectángulo"). \pause
+		Aunque existen varias implementaciones de índices espaciales, el método preferido se conoce como {\bf árbol-R}, una estructura de datos en forma de árbol de búsqueda balanceado, en donde los objetos cercanos se agrupan en su rectángulo delimitador mínimo (minimum bounding rectangle), ubicado un nivel más alto que ellos (la ``R'' en el nombre del índice es por ``rectángulo''). \pause
 		En las hojas se encuentran los objetos de nuestra base de datos. \pause
 		Este índice hace muy efectiva la búsqueda de los k vecinos más próximos a través de un join espacial.
 \end{frame}
@@ -52,4 +52,27 @@
 
 \begin{frame}
 		\frametitle{Ejemplos de consultas espaciales}
+		Consultaremos una base de datos llamada \texttt{Mundo}, que almacena las relaciones espaciales entre tres entidades: \texttt{País}, \texttt{Ciudad} y \texttt{Río}. Las tablas de los tres tipos básicos son las siguientes: \\
+		\texttt{
+				TABLE Country( \\
+				Name varchar(30), \\
+				Cont varchar(30), \\
+				Pop Integer, \\
+				GDP Number, \\
+				Shape Polygon);
+		}
+
+				TABLE City( \\
+				Name varchar(30), \\
+				Country varchar(30), \\
+				Pop Integer, \\
+				Shape Point); \\
+
+				TABLE River( \\
+				Name varchar(30), \\
+				Origin varchar(30), \\
+				Length Number, \\
+				Shape LineString);
+
+
 \end{frame}
