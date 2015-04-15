@@ -63,22 +63,6 @@
 \end{frame}
 
 \begin{frame}
-	\frametitle{Ejemplos de consultas espaciotemporales}
-	Consideremos un escenario relacionado al control de fuego forestal.
-	Trabajaremos con una base de datos conformada por las siguientes
-	tablas:
-
-	\begin{itemize}
-	\item \texttt{TABLE forest(forestname string, Territory Region);}
-
-	\item \texttt{TABLE forest\_fire(firename string, Extent Region);}
-
-	\item \texttt{TABLE fire\_fighter(figtername string, Location Point);}
-	\end{itemize}
-
-\end{frame}
-
-\begin{frame}
 \frametitle{Ejemplos de consultas espaciotemporales: número 1}
 \begin{itemize}
 	\item	Un ejemplo simple de información sobre vuelos de aerolíneas
@@ -109,8 +93,23 @@
 		}}
 \end{itemize}
 \end{frame}
-\begin{frame}
 
+\begin{frame}
+\frametitle{Ejemplos de consultas espaciotemporales}
+\begin{itemize}
+	\item	Ahora consideremos un escenario relacionado al control de fuego
+		forestal. Trabajaremos con una base de datos conformada por las
+		siguientes tablas:
+
+	\item \texttt{TABLE forest(forestname string, Territory Region);}
+
+	\item \texttt{TABLE forest\_fire(firename string, Extent Region);}
+
+	\item \texttt{TABLE fire\_fighter(fightername string, Location Point);}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \frametitle{Ejemplos de consultas espaciotemporales: número 2}
 \begin{itemize}
 	\item	Si queremos conocer el área total destruida por el fuego
