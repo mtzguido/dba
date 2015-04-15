@@ -2,81 +2,160 @@
 \subsection{Motivación}
 
 \begin{frame}
-	\frametitle{Motivación}
-	Siendo capaces de almacenar la ubicación de objetos y sus estados a lo largo del tiempo, naturalmente se espera poder combinar ambas posibilidades. \pause \\
-	Esto resulta en un modelo de bases de datos espacio-temporales, en donde la geometría de los datos involucrados también queda sujeta a los tiempos de validez y transacción propios de las DBs temporales. \pause \\
-Algunos ejemplos que justifican este modelo son: \pause
+\frametitle{Motivación}
+\begin{itemize}
+	\item	Siendo capaces de almacenar la ubicación de objetos y
+	sus estados a lo largo del tiempo, naturalmente se espera poder
+	combinar ambas posibilidades. \pause
+
+	\item	Esto resulta en un modelo de bases de datos
+	espacio-temporales, en donde la geometría de los datos involucrados
+	también queda sujeta a los tiempos de validez y transacción propios
+	de las DBs temporales. \pause
+
+	\item	Algunos ejemplos que justifican este modelo son: \pause
 	\begin{itemize}
 	\item	Seguimiento de objetos móviles (por ejemplo, satélites). \pause
 	\item	Registro de movimiento de placas tectónicas \pause
 	\item	Cruza de datos entre vuelos y pronósticos temporales
 	\end{itemize}
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Definición de DB espacio-temporal}
-	Una base de datos espacio-temporal es aquella que provee soporte interno tanto para información temporal como para información geográfica. \pause \\
-	Es, de los tres tipos de bases de datos expuestos, el menos desarrollado. No existe en el mercado ningún producto de RDBMS con extensiones espaciotemporales, y ni siquiera se ha desarrollado aún un estándar para su modelado y consulta.
+\frametitle{Definición de DB espacio-temporal}
+\begin{itemize}
+	\item	Una base de datos espacio-temporal es aquella que provee
+	soporte interno tanto para información temporal como para información
+	geográfica. \pause \\
+
+	\item	Es, de los tres tipos de bases de datos expuestos, el menos
+	desarrollado. No existe en el mercado ningún producto de RDBMS con
+	extensiones espaciotemporales, y ni siquiera se ha desarrollado aún un
+	estándar para su modelado y consulta.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-	\frametitle{STQL: un lenguaje de consultas espacio-temporales}
-	Aunque no existe un estándar, se han propuesto lenguajes de consulta y modelado de datos espaciotemporales que abarcan los aspectos más importantes de este enfoque. \pause \\
-	Uno de ellos, publicado por Martin Erwig y Markus Schneider en 2002, es \textbf{STQL: a Spatio-Temporal Query Language}. \pause \\
-	En este lenguaje, un tipo de datos abstracto llamado \texttt{objeto móvil} representa a los objetos geométricos cuya posición o forma puede variar en el tiempo. \\
-	Además, los investigadores proponen un método de extrapolar (``levantar'') los objetos espaciales agregándolos al dominio temporal, obteniendo objetos móviles y regiones mutantes. \pause \\
-	Luego, se redefinen los operadores espaciales considerando su semántica original, pero agregando su resultado según la consulta. Por ejemplo, puede consultarse si ``alguna vez'' una línea intersectó una región o si ``siempre'' un punto estuvo dentro de un polígono.
+\frametitle{STQL: un lenguaje de consultas espacio-temporales}
+\begin{itemize}
+
+	\item	Aunque no existe un estándar, se han propuesto lenguajes de
+	consulta y modelado de datos espaciotemporales que abarcan los aspectos
+	más importantes de este enfoque. \pause
+
+	\item	Uno de ellos, publicado por Martin Erwig y Markus Schneider en 2002,
+	es \textbf{STQL: a Spatio-Temporal Query Language}. \pause
+
+	\item	En este lenguaje, un tipo de datos abstracto llamado
+	\texttt{objeto móvil} representa a los objetos geométricos cuya posición
+	o forma puede variar en el tiempo. \pause
+
+	\item	Además, los investigadores proponen un método de extrapolar
+	(``levantar'') los objetos espaciales agregándolos al dominio
+	temporal, obteniendo objetos móviles y regiones mutantes. \pause
+
+	\item	Luego, se redefinen los operadores espaciales considerando su
+	semántica original, pero agregando su resultado según la consulta.
+	Por ejemplo, puede consultarse si ``alguna vez'' una línea intersectó
+	una región o si ``siempre'' un punto estuvo dentro de un polígono.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\frametitle{Ejemplos de consultas espaciotemporales}
-	Consideremos un escenario relacionado al control de fuego forestal. Trabajaremos con una base de datos conformada por las siguientes tablas: 
+	Consideremos un escenario relacionado al control de fuego forestal.
+	Trabajaremos con una base de datos conformada por las siguientes
+	tablas:
+
 	\begin{itemize}
-	\item \texttt{
-		TABLE forest(forestname string, Territory Region);
-	}
+	\item \texttt{TABLE forest(forestname string, Territory Region);}
 
-	\item \texttt{
-		TABLE forest\_fire(firename string, Extent Region);
-	}
+	\item \texttt{TABLE forest\_fire(firename string, Extent Region);}
 
-	\item \texttt{
-		TABLE fire\_fighter(figtername string, Location Point);
-	}
+	\item \texttt{TABLE fire\_fighter(figtername string, Location Point);}
 	\end{itemize}
 
 \end{frame}
 
 \begin{frame}
-	\frametitle{Ejemplos de consultas espaciotemporales: número 1}
-	Si queremos conocer el área total destruida por el fuego ``Gran Fuego'', podemos ejecutar la siguiente consulta: \pause 
-	\begin{itemize}
-	\item \texttt{
-		SELECT sum(size) FROM 
-			(SELECT size AS area( 
-			traversed(Intersection(Territory, Exent))) 
-			FROM forest\_fire, forest 
-			WHERE firename = ``Gran Fuego'' AND 
-			ever(Intersects(Territory, Extent))
-	}
-	\end{itemize}
-	La función \texttt{traversed}, retorna la proyección espacial de las sucesivas intersecciones entre el territorio del bosque y la región cubierta por ``Gran Fuego''. Al resultado, se le calcula el área.
+\frametitle{Ejemplos de consultas espaciotemporales: número 1}
+\begin{itemize}
+	\item	Un ejemplo simple de información sobre vuelos de aerolíneas
+		y clima.
+	\pause
+
+	\texttt{\small{
+	\item	flights(id:string, Route:Point)		\\
+		weather(kind:string, Extent:Region)
+	}}
+	\pause
+
+	\item	¿Donde estuvo el vuelo UA207 a las 8AM?	\\
+		\texttt{\small{SELECT Route(8:00) FROM flights	\\
+			WHERE id = 'UA207'
+		}}
+	\pause
+
+	\item	¿Cual fue el movimiento desde las 7AM a las 9AM? \\
+		\texttt{\small{SELECT Route(7:00..9:00) FROM flights	\\
+			WHERE id = 'UA207'
+		}}
+	\pause
+
+	\item	Proyectar la ruta \\
+		\texttt{\small{SELECT trajectory(Route(7:00..9:00)) FROM flights	\\
+			WHERE id = 'UA207'
+		}}
+\end{itemize}
+\end{frame}
+\begin{frame}
+
+\frametitle{Ejemplos de consultas espaciotemporales: número 2}
+\begin{itemize}
+	\item	Si queremos conocer el área total destruida por el fuego
+		``Gran Fuego'', podemos ejecutar la siguiente consulta: \pause
+
+	\texttt{\footnotesize{
+	\item	SELECT sum(size) FROM						\\
+		~(SELECT~size							\\
+		~~~~~~~~~AS area(traversed(Intersection(Territory, Extent)))	\\
+		~~FROM~~~forest\_fire, forest					\\
+		~~WHERE~~firename = 'Gran Fuego' AND				\\
+		~~~~~~~~~ever(Intersects(Territory, Extent))
+	}}
+	\pause
+
+	\item	La función \texttt{traversed}, retorna la proyección espacial
+		de las sucesivas intersecciones entre el territorio del bosque
+		y la región cubierta por ``Gran Fuego''. Al resultado, se le
+		calcula el área.
+\end{itemize}
 \end{frame}
 
 \begin{frame}
-	\frametitle{Ejemplos de consultas espaciotemporales: número 2}
-	Supongamos que queremos conocer cuánto tiempo el Teniente Miller estuvo dedicado a sofocar el incendio provocado por ``Gra Fuego''; y qué distancia recorrió en su misión. Entonces, ejecutamos la siguiente consulta: \pause 
-	\begin{itemize}
-	\item \texttt{
-		SELECT time AS duration(dom( 
-					Intersection(Location, GranFuego))), 
-				distance AS length(trajectory( 
-					Intersection(Location, GranFuego))) 
-			FROM fire\_fighter 
-			WHERE fightername = ``Tt. Miller''
-	}
-	\end{itemize}
-	, asumiendo que GranFuego haya sido definido con anterioridad.
-	El operador \texttt{dom} obtiene los intervalos en los que Location (un punto representando la posición del teniente) intersectó con GranFuego. Luego, \texttt{duration} suma estos intervalos. \\
-	De manera similar, la función \texttt{trajectory} computa la proyección espacial del movimiento del teniente dentro de la región de GranFuego sobre el plano euclideano. Posteriormente, \texttt{length} calcula su longitud total.
+\frametitle{Ejemplos de consultas espaciotemporales: número 3}
+\begin{itemize}
+	\item	Supongamos que queremos conocer cuánto tiempo el Teniente Miller
+		estuvo dedicado a sofocar el incendio provocado por ``Gran Fuego'';
+		y qué distancia recorrió en su misión. Entonces, ejecutamos la
+		siguiente consulta: \pause
+
+	\texttt{\footnotesize{
+	\item	SELECT time AS duration(dom(Intersection(Location, GranFuego))),
+		distance AS length(trajectory(Intersection(Location, GranFuego)))
+		FROM fire\_fighter WHERE fightername = 'Tt. Miller'}}
+		(asumiendo que GranFuego haya sido definido con anterioridad)
+	\pause
+
+	\item	El operador \texttt{dom} obtiene los intervalos en los que Location
+		(un punto representando la posición del teniente) intersectó con
+		GranFuego. Luego, \texttt{duration} suma estos intervalos. \\
+	\pause
+
+	\item	De manera similar, la función \texttt{trajectory} computa la
+		proyección espacial del movimiento del teniente dentro de la región
+		de GranFuego sobre el plano euclideano. Posteriormente, \texttt{length}
+		calcula su longitud total.
+\end{itemize}
 \end{frame}
