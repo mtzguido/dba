@@ -1,0 +1,54 @@
+\documentclass[obeyspaces,spaces,hyphens]{beamer}
+\usepackage[spanish]{babel}
+\usepackage{pst-node}
+\usepackage{fontspec}
+\usepackage{graphicx}
+
+%\mode<presentation>
+
+\begin{document}
+\title{Bases de datos no tradicionales - clase 1}
+\author{Felipe Gorostiaga - Guido Martínez}
+\institute{Bases de datos avanzadas, LCC}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\AtBeginSection{\frame{\sectionpage}}
+
+\setbeamertemplate{section page}
+{
+	\begin{centering}
+	\begin{beamercolorbox}[sep=12pt,center]{part title}
+	\usebeamerfont{section title}\bf{\insertsection}\par
+	\end{beamercolorbox}
+	\end{centering}
+}
+
+\include{xml}
+\include{xsd}
+\include{xslt}
+\include{json}
+\include{kv-stores}
+\include{document-stores}
+\include{mongodb}
+
+\begin{frame}
+\frametitle{Bibliografía}
+\begin{itemize}
+	\footnotesize
+	\item I.O.U.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+	¿Dudas?
+	\pause
+
+	¿Quejas?
+\end{center}
+\end{frame}
+
+\end{document}
