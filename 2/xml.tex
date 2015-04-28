@@ -1,1 +1,131 @@
 \section{XML}
+
+\begin{frame}
+\frametitle{Introducción}
+\begin{itemize}
+
+\item	XML es un lenguaje de ``markup'', o sea, permite estructurar documentos
+	y agregar metadatos de manera que sea sintáctimente distinguible del
+	contenido.
+	\pause
+
+\item	Fue diseñado por el W3C con los objetivos de:
+\begin{itemize}
+	\item	Que sea fácilmente usable a través de toda la internet
+	\item	Que pueda soportar distintos tipos de uso y aplicaciones
+	\item	Que sea fácil escribir programas que usen documentos XML
+	\item	Que sea legible por un humano
+	\item	etc...
+\end{itemize}
+\pause
+
+\item	En otras palabras, que sea {\it el} lenguaje estándar para intercambio
+	de datos.
+\pause
+
+\item	Es conceptualmente un árbol, con una única raíz.
+\pause
+
+\item	El árbol no tiene una estructura predefinida (XML es de alguna manera
+	un metalenguaje) y es lo más genérico posible. Cada nodo (usualmente
+	llamado elemento) tiene:
+	\pause
+\begin{itemize}
+	\item	Un nombre, que usualmente representa el ``tipo''
+		del elemento.
+		\pause
+	\item	Opcionalmente, una lista de atributos.
+		\pause
+	\item	Su contenido, que puede estar compuesto por
+		mas elementos.
+\end{itemize}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplos - 1}
+\footnotesize
+\texttt{<note>						\\
+	~~<to>Tove</to>					\\
+	~~<from>Jani</from>				\\
+	~~<heading>Reminder</heading>			\\
+	~~<body>Don't forget me this weekend!</body>	\\
+	</note>
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplos - 2}
+\footnotesize
+\texttt{<CATALOG>				\\
+	~~<CD>					\\
+	~~~~<TITLE>Empire Burlesque</TITLE>	\\
+	~~~~<ARTIST>Bob Dylan</ARTIST>		\\
+	~~~~<COUNTRY>USA</COUNTRY>		\\
+	~~~~<COMPANY>Columbia</COMPANY>		\\
+	~~~~<PRICE>10.90</PRICE>		\\
+	~~~~<YEAR>1985</YEAR>			\\
+	~~</CD>					\\
+	~~<CD>					\\
+	~~~~<TITLE>Hide your heart</TITLE>	\\
+	~~~~<ARTIST>Bonnie Tyler</ARTIST>	\\
+	~~~~<COUNTRY>UK</COUNTRY>		\\
+	~~~~<COMPANY>CBS Records</COMPANY>	\\
+	~~~~<PRICE>9.90</PRICE>			\\
+	~~~~<YEAR>1988</YEAR>			\\
+	~~</CD>					\\
+	</CATALOG>
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplos - 3}
+\footnotesize
+\texttt{<CATALOG>				\\
+	~~<CD>					\\
+	~~~~<TITLE>Empire Burlesque</TITLE>	\\
+	~~~~<ARTIST>Bob Dylan</ARTIST>		\\
+	~~~~<COUNTRY>USA</COUNTRY>		\\
+	~					\\
+	~~~~<PRICE>10.90</PRICE>		\\
+	~					\\
+	~~</CD>					\\
+	~~<CD>					\\
+	~~~~<TITLE>Hide your heart</TITLE>	\\
+	~~~~<ARTIST>Bonnie Tyler</ARTIST>	\\
+	~~~~<COUNTRY>UK</COUNTRY>		\\
+	~~~~<COMPANY>CBS Records</COMPANY>	\\
+	~					\\
+	~~~~<YEAR>1988</YEAR>			\\
+	~~</CD>					\\
+	</CATALOG>
+}
+\end{frame}
+
+\newcommand{\dquote}{\texttt{\char`\"}}
+
+\begin{frame}
+\frametitle{Ejemplos - 4}
+\footnotesize
+\texttt{<td style=\dquote line-height:1.35em;\dquote>		\\
+	~~<a href=\dquote /wiki/Markup\_language\dquote ~
+		title=\dquote Markup language\dquote>		\\
+	~~~~Markup language					\\
+	~~</a>							\\
+	</td>
+}
+\end{frame}
+
+\begin{frame}
+\frametitle{Parseo}
+\begin{itemize}
+	\item	Existen muchisímas librerías que parsean XML, por lo cual
+		adaptar una aplicación existente a usar XML suele ser fácil
+		(nunca tenemos que preocuparnos por parsearlo).
+		\pause
+
+	\item	Interpretar el XML es trabajo de la aplicación en cuestión
+		(ya que la definición de XML no acarrea significado).
+\end{itemize}
+\end{frame}
