@@ -67,4 +67,14 @@
 
 \begin{frame}
 \frametitle{JSON vs XML}
+\begin{itemize}
+\item	JSON se presenta como una alternativa ``fat-free'' a XML, dada la gran diferencia de tamaños entre las codificaciones de un mismo objeto en estos dos formatos. \\
+		\pause
+\item	Además la lectura y generación de objetos JSON es más simple que las de objetos XML. \\
+		\pause
+\item	De todos modos, si comprimimos ambas representaciones, por ejemplo, con gzip, la diferencia de tamaños se torna mínima, al ser la compresión muy efectiva ante los repetidos patrones de XML. \\
+		\pause
+\item	Si además en nuestro dominio es importante contar con el concepto de esquema XML, tipado fuerte y estructura formal con etiquetas predefinidas, entonces es posible que prefiramos aferrarnos a XML antes que utilizar JSON, más allá de su simplicidad y legibilidad.
+
+\end{itemize}
 \end{frame}
