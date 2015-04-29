@@ -97,5 +97,30 @@
 	~~</xsd:sequence>						\\
 	</xsd:group>
 }
+\end{frame}
 
+\begin{frame}
+\frametitle{Además de validar...}
+\begin{itemize}
+
+\item	Existe una herramienta que dado un un esquema XSD puede
+	generar una clase C++ que lo representa, y un parser para
+	documentos (XSD-CXX de CodeSynthesis).
+	\pause
+
+\item	\texttt{<contact>			\\
+		~~<name>John Doe</name>		\\
+		~~<email>j@doe.com</email>	\\
+		~~<phone>555 12345</phone>	\\
+		</contact>
+	}
+	\pause
+
+\item	\texttt{auto\_ptr<Contact> c = contact(\dquote c.xml\dquote);	\\
+		cout << c->name() << \dquote , \dquote 			\\
+		~~~~~<< c->email() << \dquote , \dquote 		\\
+		~~~~~<< c->phone() << endl;
+}
+
+\end{itemize}
 \end{frame}
