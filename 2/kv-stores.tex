@@ -1,1 +1,54 @@
 \section{Key-value stores}
+\begin{frame}
+\frametitle{Introducción}
+\begin{itemize}
+\item	Las bases de datos clave -> valor están diseñadas para almacenar arreglos asociativos, también conocidos como tablas hash o diccionarios. \pause
+\item	Únicamente permiten persistir pares clave -> valor, y recuperar un valor cuando se provee su clave. \pause
+\item	Para la base de datos, los valores son objetos oscuros, que no sabe interpretar. \pause
+\item	Esta simplicidad los hace una alternativa muy eficiente, fácilmente implementable, versátil y escalable ante las bases de datos relacionales, aunque para aplicaciones grandes y complejas, probablemente sea mejor optar por alguna de sus extensiones: \pause
+\begin{itemize}
+		\item	Bases de datos orientadas a columnas \pause
+		\item	Bases de datos de documentos. \pause
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bases de datos orientadas a columnas}
+\begin{itemize}
+\item	Las bases de datos orientadas a columnas (también llamadas ``bases de datos de registros extensibles'') almacenan los datos con un registro por columna, facilitando el manejo de un alto volumen de ellas; y ahorrando espacio para bases de datos ralas. \pause
+\item	Para comprender rápidamente cómo funcionan, veamos el siguiente ejemplo : \pause \\
+		Supongamos que nuestra base de datos tiene la siguiente forma: \\
+		\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		RowId	&	EmpId	&	Lastname	&	Firstname	&	Salary \\ \hline
+		001		&	10		&	Smith		&	Joe			&	40000 \\ \hline
+		002		&	12		&	Jones		&	Mary		&	50000 \\ \hline 
+		003		&	11		&	Johnson		&	Cathy		&	44000  \\ \hline 
+		004		&	22		&	Jones		&	Bob			&	55000  \\ \hline 
+		\end{tabular}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bases de datos orientadas a columnas}
+\begin{itemize}
+\item	La solución en una DB relacional para almacenar la tabla anterior es serializarla de la siguiente manera: \\
+		\texttt{001:10,Smith,Joe,40000 ; 002:12,Jones,Mary,50000 ; 003:11,Johnson,Cathy,44000 ; 004:22,Jones,Bob,55000 ;}
+		\pause
+\item	Utilizando una DB orientada a columnas, en cambio, la serialización quedaría así: \\
+		\texttt{10:001,12:002,11:003,22:004 ; Smith:001,Jones:002,004,Johnson:003 ; Joe:001,Mary:002,Cathy:003,Bob:004 ; 40000:001,50000:002,44000:003,55000:004 ;}
+		\pause
+\item	De esta manera, al tener los registros 002 y 004 el mismo valor para ``Lastname'', la cadena ``Jones'' aparece una sola vez en la tabla. \pause
+\item	Además, el agregado de columnas es trivial, y si una fila de la tabla no presenta un valor para cierta columna, simplemente su identificador no aparecerá como valor de ninguna clave para el registro correspondiente a dicha columna. \pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bases de datos orientadas a columnas}
+\begin{itemize}
+\item	Esta representación es sumamente eficiente para consultas como obtener todas las filas cuyo Firstname sea Cathy, o contar la cantidad de registros que coincidan con cierto criterio. \pause
+\item	Aunque dé la impresión de que esta representación será ineficiente para obtener todos los datos de un bojeto (requiriendo demasiado accesos al disco), las operaciones sobre una fila entera de una DB son raras, y sólo suele usarse un subconjunto de los campos disponibles. \pause \\
+		Por esta razón, las bases de datos orientadas a columnas han demostrado una excelente performance en aplicaciones del mundo real, a pesar de sus desventajas teóricas.
+\end{itemize}
+\end{frame}
