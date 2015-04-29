@@ -1,1 +1,101 @@
 \section{XSD}
+
+\begin{frame}
+\frametitle{Motivación}
+\begin{itemize}
+\item	Si bien XML no impone ninguna restricción a la presencia o cantidad
+	de los elementos, a veces queremos rechazar ciertos documentos
+	como inválidos.
+	\pause
+
+\item	Se necesita un sistema de tipos para XML. La solución
+	estándar es XSD (XML Schema Document)
+	\pause
+
+\item	En el documento XSD podemos especificar la estructura que
+	debe tener el documento para ser válido.
+	\pause
+
+\item	Un documento XSD: ¡también es XML!
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Características}
+\begin{itemize}
+\item	Permite definir tipos para elementos XML, tanto {\it simples}
+	(números y strings, con posibles restricciones) cómo
+	{\it complejos} (secuencias, ``choice'', etc.)
+	\pause
+
+\item	\texttt{xsd:all}: representa que todos los subelementos
+	deben aparecer en el documento, en cualquier orden. También
+	se permiten elementos opcionales.
+	\pause
+
+\item	\texttt{xsd:sequence}: similar a \texttt{all}, pero enfuerza
+	el orden.
+	\pause
+
+\item	\texttt{xsd:choice}: uno y sólo uno de los subelementos
+	matchea.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplos - 1}
+\footnotesize
+\texttt{<xsd:complexType name='USAddress'>				\\
+	~~<xsd:sequence>						\\
+	~~~~<xsd:element name='name'   type='xsd:string'/>		\\
+	~~~~<xsd:element name='street' type='xsd:string'/>		\\
+	~~~~<xsd:element name='city'   type='xsd:string'/>		\\
+	~~~~<xsd:element name='state'  type='xsd:string'/>		\\
+	~~~~<xsd:element name='zip'    type='xsd:decimal'/>		\\
+	~~</xsd:sequence>						\\
+	~~<xsd:attribute name='country' type='xsd:NMTOKEN' fixed='US'/>	\\
+	</xsd:complexType>
+}
+
+\pause
+
+\begin{itemize}
+\item	El tipo \texttt{USAddress} puede ser usado en otras partes del
+	esquema.
+	\pause
+
+\item	Representa un elemento XML con la secuencia de subelementos
+	\texttt{name}, \texttt{street}, \texttt{city}, \texttt{state} y
+	\texttt{zip}.
+	\pause
+
+\item	Opcionalmente, puede tener un atributo \texttt{country}, pero sí o sí
+	con el valor "\texttt{US}".
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplos - 2}
+\footnotesize
+\texttt{<xsd:complexType name='PurchaseOrderType'>			\\
+	~~<xsd:sequence>						\\
+	~~~~<xsd:choice>						\\
+	~~~~~~<xsd:group   ref='shipAndBill'/>				\\
+	~~~~~~<xsd:element name='singleUSAddress' type='USAddress'/>	\\
+	~~~~</xsd:choice>						\\
+	~~~~<xsd:element ref='comment' minOccurs='0'/>			\\
+	~~~~<xsd:element name='items'  type='Items'/>			\\
+	~~</xsd:sequence>						\\
+	~~<xsd:attribute name='orderDate' type='xsd:date'/>		\\
+	</xsd:complexType>						\\
+	~								\\
+	<xsd:group id='shipAndBill'>					\\
+	~~<xsd:sequence>						\\
+	~~~~<xsd:element name='shipTo' type='USAddress'/>		\\
+	~~~~<xsd:element name='billTo' type='USAddress'/>		\\
+	~~</xsd:sequence>						\\
+	</xsd:group>
+}
+
+\end{frame}
