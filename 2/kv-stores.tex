@@ -14,6 +14,26 @@
 \end{frame}
 
 \begin{frame}
+\frametitle{Uso y ejemplos}
+\begin{itemize}
+	\item	Son la versión mas simple de bases de datos NoSQL,
+		del punto de vista de su uso (su API). El cliente
+		sólo puede hacer \textit{get}, \textit{put} o
+		\textit{remove} sobre \textit{buckets}.
+		\pause
+
+	\item	Algunos ejemplos son: Riak, MemcacheDB, Redis y
+		DynamoDB de Amazon.
+		\pause
+
+	\item	Redis, en particular, puede almacenar no sólo
+		objetos opacos si no también strings, hashmaps, listas,
+		conjuntos (y más), permitiendo operaciones complejas
+		sobre ellos (append atómico, operaciones de conjuntos, etc.)
+\end{itemize}
+
+\end{frame}
+\begin{frame}
 \frametitle{Bases de datos orientadas a columnas}
 \begin{itemize}
 \item	Las bases de datos orientadas a columnas (también llamadas ``bases de datos de registros extensibles'') almacenan los datos con un registro por columna, facilitando el manejo de un alto volumen de ellas; y ahorrando espacio para bases de datos ralas. \pause
@@ -23,9 +43,9 @@
 		\hline
 		RowId	&	EmpId	&	Lastname	&	Firstname	&	Salary \\ \hline
 		001		&	10		&	Smith		&	Joe			&	40000 \\ \hline
-		002		&	12		&	Jones		&	Mary		&	50000 \\ \hline 
-		003		&	11		&	Johnson		&	Cathy		&	44000  \\ \hline 
-		004		&	22		&	Jones		&	Bob			&	55000  \\ \hline 
+		002		&	12		&	Jones		&	Mary		&	50000 \\ \hline
+		003		&	11		&	Johnson		&	Cathy		&	44000  \\ \hline
+		004		&	22		&	Jones		&	Bob			&	55000  \\ \hline
 		\end{tabular}
 \end{itemize}
 \end{frame}
