@@ -1,1 +1,41 @@
 \section{Document stores}
+
+\begin{frame}
+\frametitle{Mas allá de un KV-store}
+\begin{itemize}
+
+\item	Si bien los KV-store tienen excelentes propiedades de performance
+	y availabilidad (pueden distribuirse automáticamente), a veces
+	queremos mas funcionalidad del DBMS. El hecho de que los valores
+	sean opacos es justamente el problema.
+	\pause
+
+\item	Queremos que el motor sea consciente de la estructura interna
+	del dato, y poder usarla para hacer consultas.
+	\pause
+
+\item	Las DBs de documento no imponen un esquema sobre los datos de
+	cada colección, permitiendo flexibilidad en los datos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Caracterización}
+\begin{itemize}
+\item	El concepto central de una Document Store es el ``Documento''.
+	El DBMS guarda y devuelve documentos que puedene estar representados
+	en XML, JSON, BSON o algún otro lenguaje para datos semi-estructurados.
+	\pause
+
+\item	Algunas también permiten replicación y sharding automático, por lo
+	cual es bastante simple correrlas en un cluster.
+	\pause
+
+\item	Permiten agregar condiciones sobre los valores (o presencia) de los
+	campos a las consultas, y proyectar la información.
+	\pause
+
+\item	También, permiten la creación de índices sobre los datos, lo cual
+	puede permitir enormes ganancias en performance.
+\end{itemize}
+\end{frame}

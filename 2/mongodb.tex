@@ -1,1 +1,51 @@
 \section{MongoDB}
+
+\begin{frame}
+\frametitle{Introducción}
+\begin{itemize}
+
+\item	MongoDB es una DB orientada a documentos multi-plataforma
+	considerada la mas usada entre las NoSQL.
+	\pause
+
+\item	Usa documentos en formato JSON (internamente BSON) y no necesita
+	ninguna declaración de esquema.
+	\pause
+
+\item	Los documentos se agregan a colecciones y automáticamente se les
+	da un \texttt{\_id} único.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Uso básico}
+\begin{itemize}
+
+\item	Agregar un documento a una colección: \\
+	\texttt{\footnotesize
+		> db.coll.insert(\{city: 'Rosario', country: 'Argentina'\})
+	}
+	\pause
+
+\item	Recuperar toda la colección: \\
+	\texttt{\footnotesize
+		> db.coll.find()
+	}
+	\pause
+
+\item	Recuperar sólo documentos con \texttt{country} igual a
+	\texttt{'Argentina'} \\
+	\texttt{\footnotesize
+		> db.coll.find(\{country: 'Argentina'\}) \\
+		\{ '\_id' : ObjectId('55469f06291c11c92d62d784'), 'city' : 'Rosario', 'country' : 'Argentina' \}
+	}
+	\pause
+
+\item	Si queremos sólo el nombre de la ciudad: \\
+	\texttt{\footnotesize
+		> db.coll.find(\{country: 'Argentina'\}, \{city: 1\}) \\
+		\{ 'city' : 'Rosario' \}
+	}
+
+\end{itemize}
+\end{frame}
