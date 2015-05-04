@@ -49,3 +49,27 @@
 
 \end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Usando índices}
+\begin{itemize}
+
+\item	Crear un índice sobre la ciudad: \\
+	\texttt{\footnotesize
+		> db.coll.createIndex(\{city: 1\})
+	}
+	\pause
+
+\item	Esto causa que los \texttt{find()} cuando predicamos sobre
+	\texttt{city} sean mucho más eficientes.
+	\pause
+
+\item	O un índice múltiple:
+	\texttt{\footnotesize
+		> db.coll.createIndex(\{city: 1, country: 1\})
+	}
+
+\end{itemize}
+\end{frame}
+
+\section{Demo de MongoDB}
