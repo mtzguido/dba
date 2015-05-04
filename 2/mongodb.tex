@@ -52,8 +52,13 @@
 
 \begin{frame}
 \frametitle{Usando índices}
-\begin{itemize}
 
+Para llevar a cabo la consulta anterior, se debe recorrer toda la
+colección, ya que no hay ningún concepto de clave. Para evitar eso,
+podemos definir manualmente índices.
+\pause
+
+\begin{itemize}
 \item	Crear un índice sobre la ciudad: \\
 	\texttt{\footnotesize
 		> db.coll.createIndex(\{city: 1\})
@@ -64,7 +69,7 @@
 	\texttt{city} sean mucho más eficientes.
 	\pause
 
-\item	O un índice múltiple:
+\item	O un índice múltiple: \\
 	\texttt{\footnotesize
 		> db.coll.createIndex(\{city: 1, country: 1\})
 	}
