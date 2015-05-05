@@ -1,0 +1,47 @@
+> // Borramos toda la colección, si es que había algo
+> db.users.remove()
+
+> // Agregamos algunos datos
+> db.users.insert({name: "guido", id: 25})
+> db.users.insert({name: "feli", id: 50})
+
+> // Consultamos toda la tabla
+> db.users.find()
+
+> // Sólo con id > 30
+> db.users.find({id: {$gt : 30}})
+
+> // Si no queremos ver el _id
+> db.users.find({}, {_id:0})
+
+> // Update
+> db.users.update({id: {$gt: 30}}, {$inc: {id: 1}})
+
+> // Grid contiene pares (x,y) con x,y de 1 a 2000
+> // O sea, 4 millones de elementos.
+> db.grid.find().count()
+
+> // Contar cuantos elementos hay con x = 500
+> db.grid.find({x: 500}).explain().millis
+1417
+
+> // Lleva mucho tiempo debido a que se debe recorrer toda
+> // la collección. Si creamos un índice...
+> db.grid.createIndex({x:1})
+> db.grid.find({x: 500}).explain().millis
+2
+grid.createIndex({y:1})
+> grid.find({y: 500}).explain().millis
+4
+
+> // Sin embargo, buscar un elemento en particular no es
+> // tán rápido. Se puede usar cualquiera de los índices
+> // y tendremos 2000 elementos en vez de 4 millones,
+> // pero se puede conseguir algo mejor
+> db.grid.find({x:500, y:500}).explain().millis
+21
+> db.grid.createIndex({x:1, y:1})
+> db.grid.find({x:500, y:500}).explain().millis
+0
+
+> db.grid.getIndexes()
