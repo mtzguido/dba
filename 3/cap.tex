@@ -1,0 +1,62 @@
+\section{Teorema de Brewer}
+
+\begin{frame}
+\frametitle{Introducción}
+\begin{itemize}
+
+\item	Entre las ventajas de las bases de datos no relacionales, una de las más destacadas es la facilidad de permitir a la base de datos escalar horizontalmente. \pause
+
+\item	Sin embargo, el teorema de Brewer (o teorema CAP, por las siglas de ``Consistency, Availability y Partition tolerance'') demuestra que es imposible para un sistema de cómputo distribuido brindar justamente estas tres garantías a la vez:
+		\begin{itemize}
+			\item	Consistencia
+			\item	Disponibilidad
+			\item	Tolerancia a particionado
+		\end{itemize}
+		\pause
+\item	Veamos cómo afecta la falta de cada una de ellas a una base de datos.
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Falta de consistencia}
+\begin{itemize}
+
+	\item	La consistencia en un sistema de base de datos distribuidos implica que todos los nodos deben visualizar los mismos datos en todo momento. \pause
+	\item	Un sistema distribuido que no asegura consistencia en los datos, permite que dos consultas iguales procesadas por nodos diferentes retornen resultados diferentes. \pause
+	\item	El DBMS ``Cassandra'' asegura disponibilidad y tolerancia a particionado pero no consistencia. \pause
+	\item	Aunque para paliar este problema, asegura ``consistencia eventual'', que garantiza que si no hay nuevas actualizaciones de un dato, eventualmente todos los accesos a él retornarán el mismo valor (actualizado).
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Falta de disponibilidad}
+\begin{itemize}
+
+	\item	La disponibilidad de una base de datos requiere que todas las transacciones sean procesadas y respondidas por el sistema. \pause
+	\item	Un sistema que no asegure disponibilidad completa hará que sus usuarios en algún momento no puedan acceder ni actualizar los datos en ellas almacenados, aunque sea por un corto período de tiempo.
+	\item	Los DBMS que utilizan la famiila de protocolos Paxos para concurrencia (e.g. Neo4j) no pueden asegurar una disponibilidad del 100\%
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{No tolerancia al particionado}
+\begin{itemize}
+
+	\item	El particionado de un conjunto de nodos se refiere a una falla que impide que un conjunto de ellos no pueda comunicarse con los restantes (los particiona). \pause
+	\item	Tolerar el particionado significa que la base de datos seguirá funcionando a pesar de que haya fallas de comunicación entre los subsistemas. \pause
+	\item	No tolerarlo, implica que la base de datos puede no operar si algunos de sus nodos fallan. \pause
+	\item	Las bases de datos relacionales no toleran el particionado del sistema.
+	
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{¿Por qué?}
+\begin{itemize}
+
+	\item TODO
+\end{itemize}
+\end{frame}
