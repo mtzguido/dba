@@ -83,5 +83,35 @@
 
 \item	Usada por muchísimas empresas y organizaciones (eBay, Walmart,
 	Cisco, y más).
+	\pause
+
+\item	Permite importar datos de motores relacionales con cierta
+	facilidad.
+	\pause
+
+\item	Usa un lenguaje de consulta llamado \textit{Cypher} que permite
+	hacer todas las operaciones que esperamos.
 \end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Ejemplo rápido de Cypher}
+\footnotesize
+
+\texttt{SELECT name FROM Person					\\
+	LEFT JOIN Person\_Department				\\
+	~~ON Person.Id = Person\_Department.PersonId		\\
+	LEFT JOIN Department					\\
+	~~ON Department.Id = Person\_Department.DepartmentId	\\
+	WHERE Department.name = 'IT Department'			\\
+}
+\vspace{5mm}
+\pause
+\texttt{MATCH (p:Person)<-[:EMPLOYEE]-(d:Department)		\\
+	WHERE d.name = 'IT Department'				\\
+	RETURN p.name
+}
+
+\end{frame}
+
+\section{Demo de Neo4j}
