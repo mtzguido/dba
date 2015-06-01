@@ -1,0 +1,10 @@
+match (n) return n
+match (n:LETTER) return n
+
+match (n)-[r:MAPS]->(m) delete n,r,m
+
+match (n)-[r]->(m)-[s]->(o) return n,r,m,s,o
+match (n)-[r:MAPS]->(m) where n.l = 'g' return m.n;
+
+
+
