@@ -13,7 +13,7 @@
 			\item	Tolerancia a particionado
 		\end{itemize}
 		\pause
-\item	Veamos cómo afecta la falta de cada una de ellas a una base de datos.
+\item	Veamos cómo afecta la falta de cada una de ellas a una base de datos distribuida.
 
 \end{itemize}
 \end{frame}
@@ -36,7 +36,7 @@
 
 	\item	La disponibilidad de una base de datos requiere que todas las transacciones sean procesadas y respondidas por el sistema. \pause
 	\item	Un sistema que no asegure disponibilidad completa hará que sus usuarios en algún momento no puedan acceder ni actualizar los datos en ellas almacenados, aunque sea por un corto período de tiempo.
-	\item	Los DBMS que utilizan la famiila de protocolos Paxos para concurrencia (e.g. Neo4j) no pueden asegurar una disponibilidad del 100\%
+	\item	Los DBMS que utilizan la familia de protocolos Paxos para concurrencia (e.g. Neo4j) no pueden asegurar una disponibilidad del 100\%
 
 \end{itemize}
 \end{frame}
@@ -45,7 +45,7 @@
 \frametitle{No tolerancia al particionado}
 \begin{itemize}
 
-	\item	El particionado de un conjunto de nodos se refiere a una falla que impide que un conjunto de ellos no pueda comunicarse con los restantes (los particiona). \pause
+	\item	El particionado de un conjunto de nodos se refiere a una falla que impide que un conjunto de ellos no pueda comunicarse con los restantes. \pause
 	\item	Tolerar el particionado significa que la base de datos seguirá funcionando a pesar de que haya fallas de comunicación entre los subsistemas. \pause
 	\item	No tolerarlo, implica que la base de datos puede no operar si algunos de sus nodos fallan. \pause
 	\item	Las bases de datos relacionales no toleran el particionado del sistema.
@@ -57,6 +57,12 @@
 \frametitle{¿Por qué?}
 \begin{itemize}
 
-	\item TODO
+	\item	Una manera intuitiva de comprobar la veracidad del teorema es procurar tolerar el particionado e intentar asegurar disponibilidad y consistencia. \pause
+	\item	Supongamos que existen dos nodos N1 y N2, y una falla en la red impide la comunicación entre ellos. \pause
+	\item	Luego, si alguien habla con N1 y pretende alterar el conjunto de datos, N1 no tiene manera de propagar estos datos a N2. \pause
+	\item	Si pretendemos asegurar disponibilidad, deberíamos permitir cambios tanto en N1 como en N2, lo cual deja al sistema inconsistente; con algunas actualizaciones aplicadas en N1 y otras en N2. \pause
+	\item	Si, en cambio, queremos garantizar consistencia, debemos bloquear cambios en N1 y N2, perdiendo disponibilidad en el sistema. \pause
+	\item	Redirigir todas las peticiones a uno de los nodos también implica restringir la disponibilidad (los clientes que se hayan conectado al nodo descartado pueden no ser capaces de comunicarse con aquel al que se los pretende redirigir).
+
 \end{itemize}
 \end{frame}
