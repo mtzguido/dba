@@ -6,5 +6,6 @@ match (n)-[r:MAPS]->(m) delete n,r,m
 match (n)-[r]->(m)-[s]->(o) return n,r,m,s,o
 match (n)-[r:MAPS]->(m) where n.l = 'g' return m.n;
 
-
+match path=(n)-[*]->(m) where n.l = 'a' AND m.l = 'd' return path
+match path=(n)-[*]->(m) where n.l = 'a' AND m.n = 5 return path
 

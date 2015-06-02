@@ -1,0 +1,67 @@
+\section{Modelos de consistencia}
+
+\begin{frame}
+\frametitle{Introducción}
+\begin{itemize}
+\item	Debido al teorema CAP no podemos tener un sistema
+	perfectamente consistente con tolerancia a fallas
+	y disponibilidad. Sin embargo, podemos relajar algunas
+	de estas propiedades para obtener modelos interesantes.
+	\pause
+
+\item	Estos modelos deben proporcionar alguna solución a los
+	conflictos write-write, read-write y de réplica.
+	\pause
+
+\item	Muchas DBs implementan estos modelos relajados de consistencia,
+	incluso con valores configurables para poder ajustarlas a nuestras
+	necesidades.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Quórums - WW}
+\begin{itemize}
+\item	Para evitar conflictos write-write, podemos hacer que los
+	distintos nodos se sincronicen antes de efectuar la escritura.
+	La cantidad de nodos necesaria se conoce como Quórum de escritura
+	(\textbf{W}).
+	\pause
+
+\item	Si nuestro clúster tiene 5 nodos, basta con que 3 ``aprueben''
+	la escritura para poder hacerla sin problemas. No puede haber otra
+	escritura ``aprobada'' al mismo tiempo.
+	\pause
+
+\item	De hecho, sólo hace falta tener mayoría sobre los nodos que
+	guardan el mismo registro. Si cada registro está triplicado
+	en un sistema de mil nodos, sólo necesitamos 2 \textit{acks}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Quórums - Replicación}
+\begin{itemize}
+\item	Siguiendo esa idea, para evitar conflictos de replicación
+	podemos pedir un Quórum de lectura (\textbf{R}).
+	\pause
+
+\item	En este caso, nos aseguramos que \textbf{R} nodos tengan
+	sus datos consistentes antes de tomar la lectura como válida.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Combinando}
+\begin{itemize}
+\item	Si llamamos \textbf{N} al factor de replicación del sistema,
+	tenemos que:
+
+	El sistema es consistente $ \iff R + W > N$
+	\pause
+
+\item	Esto abre a la puerta a debate sobre los valores óptimos
+	para cada variable (y su impacto en latencia y tolerancia
+	a particiones), para cada aplicación.
+\end{itemize}
+\end{frame}
