@@ -22,7 +22,8 @@
 \frametitle{Falta de consistencia}
 \begin{itemize}
 
-	\item	La consistencia en un sistema de base de datos distribuidos implica que todos los nodos deben visualizar los mismos datos en todo momento. \pause
+	\item	La consistencia en un sistema de base de datos distribuidos implica que todos los nodos deben visualizar los mismos datos en todo momento.
+		(Notar que es distinto a la consistencia en un sentido ACID).\pause
 	\item	Un sistema distribuido que no asegura consistencia en los datos, permite que dos consultas iguales procesadas por nodos diferentes retornen resultados diferentes. \pause
 	\item	El DBMS ``Cassandra'' asegura disponibilidad y tolerancia a particionado pero no consistencia. \pause
 	\item	Aunque para paliar este problema, asegura ``consistencia eventual'', que garantiza que si no hay nuevas actualizaciones de un dato, eventualmente todos los accesos a él retornarán el mismo valor (actualizado).
